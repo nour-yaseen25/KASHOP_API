@@ -26,9 +26,9 @@ namespace KASHOP.PL.Controllers
         }
 
         [HttpGet("")]
-        public IActionResult Index() {
+        public async Task<IActionResult> Index() {
 
-            var categories= _categoryService.GetAllCategories();
+            var categories=await _categoryService.GetAllCategories();
             /*  var categories=_categoryRepository.GetAll();
             var response=categories.Adapt<List<CategoryResponse>>();  */
             return Ok(new
@@ -39,9 +39,9 @@ namespace KASHOP.PL.Controllers
         }
         [HttpPost("")]
 
-        public IActionResult Create(CategoryRequest request)
+        public async Task<IActionResult> Create(CategoryRequest request)
         {
-            var response = _categoryService.CreateCategory(request);
+            var response =await _categoryService.CreateCategory(request);
  /*
             var category = request.Adapt<Category>();
             _categoryRepository.Create(category);   */

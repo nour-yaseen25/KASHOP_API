@@ -9,14 +9,15 @@ namespace KASHOP.DAL.Repository
 {
     public class MockCategoryRepository : ICategoryRepository
     {
-        public Category Create(Category category)
+        public Task<Category> CreateAsync(Category category)
         {
             throw new NotImplementedException();
         }
 
-        public List<Category> GetAll()
+        public Task<List<Category>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
     }
 }
+

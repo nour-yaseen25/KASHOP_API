@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace KASHOP.DAL.Repository
 {
-    public interface ICategoryRepository :IGenericRepository<Category>
+    public interface IGenericRepository<T> where T : class
     {
+        Task<List<T>> GetAllAsync();
+        Task<T> CreateAsync(T entry);
 
     }
 }
+
