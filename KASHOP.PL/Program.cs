@@ -1,5 +1,6 @@
 
 using KASHOP.DAL.Data;
+using KASHOP.DAL.Repository;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -24,7 +25,8 @@ namespace KASHOP.PL
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             }
                 
-                );
+            );
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             /* we need to configure our application to register the required services. In the Program class */
             /*We need to set the ResourcesPath property to our Resources folder,
