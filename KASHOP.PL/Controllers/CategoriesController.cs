@@ -1,4 +1,5 @@
-﻿using KASHOP.DAL.Data;
+﻿using KASHOP.BLL.Service;
+using KASHOP.DAL.Data;
 using KASHOP.DAL.DTO.Request;
 using KASHOP.DAL.DTO.Response;
 using KASHOP.DAL.Model;
@@ -17,22 +18,22 @@ namespace KASHOP.PL.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly IStringLocalizer<SharedResources> _Localizer;
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryService _categoryService;
 
-        public CategoriesController(ICategoryRepository categoryRepository,IStringLocalizer<SharedResources>localizer) {
-            _categoryRepository = categoryRepository;
+        public CategoriesController(ICategoryService categoryService, IStringLocalizer<SharedResources>localizer) {
+            _categoryService = categoryService;
             _Localizer = localizer;
         }
 
         [HttpGet("")]
-        public IActionResult Get() {
+        public IActionResult Index() {
 
-            var categories=_categoryRepository.GetAll();
-            var response=categories.Adapt<List<CategoryResponse>>();    
-
+            var categories= _categoryService.GetAllCategories();
+            /*  var categories=_categoryRepository.GetAll();
+            var response=categories.Adapt<List<CategoryResponse>>();  */
             return Ok(new
             {
-                data=response,
+                data=categories,
                 _Localizer["Success"].Value
             }); 
         }
@@ -40,14 +41,16 @@ namespace KASHOP.PL.Controllers
 
         public IActionResult Create(CategoryRequest request)
         {
+            var response = _categoryService.CreateCategory(request);
+ /*
             var category = request.Adapt<Category>();
-            _categoryRepository.Create(category);
-            
+            _categoryRepository.Create(category);   */
             return Ok(new
             {
-                message = _Localizer["Success"].Value
+                message = _Localizer["Success"].Value,
+                response
             });
-        }
+        } 
     }
 }
 

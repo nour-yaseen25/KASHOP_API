@@ -1,4 +1,5 @@
 
+using KASHOP.BLL.Service;
 using KASHOP.DAL.Data;
 using KASHOP.DAL.Repository;
 using Microsoft.AspNetCore.Localization;
@@ -27,6 +28,8 @@ namespace KASHOP.PL
                 
             );
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            /**/
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
 
             /* we need to configure our application to register the required services. In the Program class */
             /*We need to set the ResourcesPath property to our Resources folder,

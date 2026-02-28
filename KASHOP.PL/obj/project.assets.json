@@ -1650,7 +1650,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
-          "KASHOP.DAL": "1.0.0"
+          "KASHOP.DAL": "1.0.0",
+          "Mapster": "7.4.0"
         },
         "compile": {
           "bin/placeholder/KASHOP.BLL.dll": {}
