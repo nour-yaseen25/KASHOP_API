@@ -1,6 +1,8 @@
 ﻿using KASHOP.DAL.Data;
+using KASHOP.PL.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace KASHOP.PL.Controllers
 {
@@ -9,13 +11,17 @@ namespace KASHOP.PL.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IStringLocalizer<SharedResources> _Localizer;
 
-        public CategoriesController(ApplicationDbContext context) { _context = context; }
+        public CategoriesController(ApplicationDbContext context,IStringLocalizer<SharedResources>localizer) { 
+            _context = context;
+            _Localizer = localizer;
+        }
 
         [HttpGet("")]
         public IActionResult Get() {
 
-            return Ok();
+            return Ok(_Localizer["Success"].Value); 
         }
     }
 }
