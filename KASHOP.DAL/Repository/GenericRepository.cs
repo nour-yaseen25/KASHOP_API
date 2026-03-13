@@ -25,10 +25,18 @@ namespace KASHOP.DAL.Repository
             return entry;
         }
 
-        public async Task<List<T>> GetAllAsync()
+        public async Task<List<T>> GetAllAsync(string[]?includes=null)
         {
             /*Include(c => c.Translations)*/
-            return await _context.Set<T>().ToListAsync();
+            //return await _context.Set<T>().ToListAsync();
+            IQueryable<T> query =_context.Set<T>();
+            if(includes != null)
+            {
+                foreach(var item in includes)
+                    query = query.Include(item);
+            }
+            return await query.ToListAsync();
+
 
         }
     }

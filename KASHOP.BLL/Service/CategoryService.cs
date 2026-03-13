@@ -30,7 +30,7 @@ namespace KASHOP.BLL.Service
 
         public async Task<List<CategoryResponse>> GetAllCategories()
         {
-            var categories =await _categoryRepository.GetAllAsync();
+            var categories =await _categoryRepository.GetAllAsync(new string[] {nameof(Category.Translations)});
             var response = categories.Adapt<List<CategoryResponse>>();
             return response;
         }
