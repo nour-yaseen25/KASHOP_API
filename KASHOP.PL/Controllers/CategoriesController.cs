@@ -56,6 +56,27 @@ namespace KASHOP.PL.Controllers
         {
             return Ok(await _categoryService.GetCategory(c=>c.Id == id));
         }
+
+        [HttpDelete("{id}")]
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleted=await _categoryService.DeleteCategory(id);
+            if(!deleted)
+            {
+                return NotFound( new { message = _Localizer["NotFound"].Value });
+            }
+            return Ok(new { message = _Localizer["Success"].Value});
+        }
+
+        [HttpPatch("{id}")] 
+
+        public async Task<IActionResult> update(int id,CategoryRequest request)
+        {
+            var updated=await _categoryService.UpdateCategory(id,request);
+            return Ok(updated);
+        }
     }
 }
+
 

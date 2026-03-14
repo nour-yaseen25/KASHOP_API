@@ -29,6 +29,15 @@ namespace KASHOP.BLL.Service
             return category.Adapt<CategoryResponse>(); 
         }
 
+        public async Task<bool> DeleteCategory(int id) 
+        {
+            var category=await _categoryRepository.GetOne(c=>c.Id==id);
+
+            if (category == null) return false;
+            return await _categoryRepository.DeleteAsync(category);
+
+        }
+
         public async Task<List<CategoryResponse>> GetAllCategories()
         {
             var categories =await _categoryRepository.GetAllAsync(new string[] {nameof(Category.Translations)});
@@ -41,6 +50,38 @@ namespace KASHOP.BLL.Service
             var categories = await _categoryRepository.GetOne(filter,new string[] { nameof(Category.Translations) });
             var response = categories.Adapt<CategoryResponse>();
             return response;
+        }
+
+        public async Task<CategoryResponse> UpdateCategory(int id,CategoryRequest request)
+        {
+            var entity = await _categoryRepository.GetOne(x => x.Id == id, new string[] { nameof(Category.Translations) });
+
+            if (entity.Translations == null)
+                entity.Translations = new List<CategoryTranslation>();
+
+            foreach (var tr in request.Translations)
+            {
+                var existing = entity.Translations
+                    .FirstOrDefault(x => x.Language == tr.Language);
+
+                if (existing != null)
+                {
+                    tr.Adapt(existing); // update
+                }
+                /*
+                else
+                {
+                    var newTranslation = tr.Adapt<CategoryTranslation>();
+                    newTranslation.CategoryId = entity.Id;
+
+                    entity.Translations.Add(newTranslation);
+                }
+                */
+            }
+            await _categoryRepository.UpdateAsync(entity);
+
+            return entity.Adapt<CategoryResponse>();
+
         }
     }
 }
